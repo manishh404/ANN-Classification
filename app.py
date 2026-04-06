@@ -1,12 +1,13 @@
 import streamlit as st
 import numpy as np
-import tensorflow as tf
+## import tensorflow as tf
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import pandas as pd
 import pickle
 
 #Load the trained model
-model= tf.keras.models.load_model('model.h5', compile=False)
+## model= tf.keras.models.load_model('model.h5', compile=False)
+model= pickle.load(open("model.pkl","rb"))
 # load the encoders and scaler
 with open('onehot_encoder_geo.pkl','rb') as file:
     onehot_encoder_geo=pickle.load(file)
@@ -55,7 +56,7 @@ input_data= pd.concat([input_data.reset_index(drop=True),geo_encoded_df], axis=1
 input_data_scaled= scaler.transform(input_data)
 
 prediction=model.predict(input_data_scaled)
-prediction_proba=prediction[0][0]
+prediction_proba=prediction[0][1]
 st.write(f'Churn Probability: {prediction_proba:.2f}')
 
 
