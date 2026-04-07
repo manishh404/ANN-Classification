@@ -56,7 +56,7 @@ input_data= pd.concat([input_data.reset_index(drop=True),geo_encoded_df], axis=1
 input_data_scaled= scaler.transform(input_data)
 
 prediction=model.predict(input_data_scaled)
-prediction_proba=prediction[0][1]
+prediction_proba=model.predict_proba(input_data_scaled)[0][1]
 st.write(f'Churn Probability: {prediction_proba:.2f}')
 
 
